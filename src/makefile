@@ -51,6 +51,7 @@ sword.hdf: ianna-esxdos.bin level1.map level2.map level3.map level4.map level5.m
 	hdfmonkey put sword.hdf ianna.gam   /sword
 	hdfmonkey put sword.hdf esxload.bin /sword
 	hdfmonkey put sword.hdf intro.bin   /sword
+	mkdir -p iannasd
 	cp loader iannasd/loader
 	cp ianna.spr iannasd/ianna.spr
 	cp ianna.dat iannasd/ianna.dat
