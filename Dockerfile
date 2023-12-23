@@ -4,7 +4,7 @@ FROM ubuntu:latest
 RUN dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y
 
 # Install the necessary tools
-RUN apt-get install -y autoconf build-essential curl git libdsk-utils make unzip wget wine wine32
+RUN apt-get install -y autoconf build-essential curl git make unzip wget wine wine32
 
 # Install Pasmo
 RUN wget https://pasmo.speccy.org/bin/pasmo-0.5.5.tar.gz \
@@ -13,13 +13,12 @@ RUN wget https://pasmo.speccy.org/bin/pasmo-0.5.5.tar.gz \
     && cd ..
 
 # Install libdsk
-#RUN wget https://www.seasip.info/Unix/LibDsk/libdsk-1.4.2.tar.gz \
-#    && tar -xvzf libdsk-1.4.2.tar.gz \
-#    cd libdsk-1.4.2 && ./configure && make && make install \
-#    && cd ..
+RUN wget https://www.seasip.info/Unix/LibDsk/libdsk-1.5.19.tar.gz \
+    && tar -xvzf libdsk-1.5.19.tar.gz \
+    && cd libdsk-1.5.19 && ./configure && make && make install \
+    && cd ..
 
 # Install mkp3fs, specform and tapget utilities
-# @TODO este paso falla
 RUN wget http://www.seasip.info/ZX/taptools-1.0.8.tar.gz \
     && tar -xvzf taptools-1.0.8.tar.gz \
     && cd taptools-1.0.8 && ./configure && make && make install \
@@ -50,10 +49,19 @@ RUN git clone https://github.com/AugustoRuiz/dskgen \
 RUN git clone https://github.com/fjpena/sword-of-ianna-zx.git \
     && gcc /sword-of-ianna-zx/tools/fill16k.c -o /usr/local/bin/fill16k
 
+# Update library load config
+RUN ldconfig
+
 # Create directory for source code
 
 RUN mkdir /src
 
+WORKDIR /src/src
+
 ENTRYPOINT ["bash"]
 
 CMD ["-i"]
+
+# Usage: docker run -v $(pwd):/src -it ianna
+# cd src/src
+# make
