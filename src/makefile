@@ -3,7 +3,7 @@ all:  ianna.tap ianna-3dos.dsk sword.hdf ianna-cart.rom ianna-dan.rom ianna-if2.
 
 # ianna-sect.dsk vendrá cuando todo esté listo :)
 
-clean: 
+clean:
 	rm -f *.bin
 	rm -f *.sym
 	rm -f *.cmp
@@ -40,11 +40,11 @@ sizes_files.sym: level1.map level2.map level3.map level4.map level5.map level6.m
 
 loader_tap:
 	zmakebas -a 10 -n IANNA -o SwordOfIanna.tap loader_tap.bas
-	apack 48k.scr 48k.cmp 
-	pasmo tapeload.asm tapeload.bin 
+	apack 48k.scr 48k.cmp
+	pasmo tapeload.asm tapeload.bin
 	./gentap --out SwordOfIanna.tap --name loader --addr 0x5e24 0xFF tapeload.bin
 
-ianna-tap.bin: ianna.asm tiles.asm drawsprite.asm input.asm im2.asm rambank.asm entities.asm scripts.asm sprite.asm sprite_barbaro.asm sprite_esqueleto.asm objects.asm depack.asm sizes_files.sym io-tap.asm ram3.sym music.asm score.asm io.asm 
+ianna-tap.bin: ianna.asm tiles.asm drawsprite.asm input.asm im2.asm rambank.asm entities.asm scripts.asm sprite.asm sprite_barbaro.asm sprite_esqueleto.asm objects.asm depack.asm sizes_files.sym io-tap.asm ram3.sym music.asm score.asm io.asm
 	pasmo -E IO_DRIVER=6 ianna.asm ianna-tap.bin ianna-tap.sym
 
 
@@ -73,7 +73,7 @@ sword.hdf: ianna-esxdos.bin level1.map level2.map level3.map level4.map level5.m
 	cat ianna-esxdos.bin > ianna.bin
 	cat level1.map level2.map level3.map level4.map level5.map level6.map > ianna.dat
 	cat level7.map level8.map level0.map level9.map > ianna2.dat
-	cat loading.scr ram3.bin menu.bin ianna.bin > ianna.gam	
+	cat loading.scr ram3.bin menu.bin ianna.bin > ianna.gam
 	hdfmonkey create sword.hdf 64M Ianna
 	hdfmonkey format sword.hdf Ianna
 	hdfmonkey mkdir sword.hdf sword
@@ -86,7 +86,7 @@ sword.hdf: ianna-esxdos.bin level1.map level2.map level3.map level4.map level5.m
 	hdfmonkey put sword.hdf esxload.bin /sword
 	hdfmonkey put sword.hdf intro.bin   /sword
 	mkdir -p iannasd
-	cp loader iannasd/loader
+	cp loader iannasd/loader.bas
 	cp ianna.spr iannasd/ianna.spr
 	cp ianna.dat iannasd/ianna.dat
 	cp ianna2.dat iannasd/ianna2.dat
@@ -110,7 +110,7 @@ diskload.bin.zxb: diskload.bin
 	specform diskload.bin
 
 diskload.bin: diskload.asm
-	pasmo diskload.asm diskload.bin	
+	pasmo diskload.asm diskload.bin
 
 esxloader.bin: esxloader.asm
 	pasmo esxloader.asm esxloader.bin
@@ -230,7 +230,7 @@ sprite_rollingstone.cmp: sprite_rollingstone.asm
 
 sprite_golem_inf.cmp: sprite_golem_inf.asm
 	pasmo sprite_golem_inf.asm sprite_golem_inf.bin
-	apack sprite_golem_inf.bin sprite_golem_inf.cmp 
+	apack sprite_golem_inf.bin sprite_golem_inf.cmp
 
 sprite_golem_sup.cmp: sprite_golem_sup.asm
 	pasmo sprite_golem_sup.asm sprite_golem_sup.bin
